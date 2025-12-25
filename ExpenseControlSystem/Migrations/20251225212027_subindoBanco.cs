@@ -122,7 +122,8 @@ namespace ExpenseControlSystem.Migrations
                 values: new object[,]
                 {
                     { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), 50.0m, new DateTime(2025, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Compra de lanche pelo Ifood", new DateTime(2025, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") },
-                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), 28.50m, new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ida ao trabalho", new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") }
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), 28.50m, new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ida ao trabalho", new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), 130.0m, new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "viagem de uber para a praia", new DateTime(2025, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") }
                 });
 
             migrationBuilder.CreateIndex(

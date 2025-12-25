@@ -1,3 +1,4 @@
+using ExpenseControlSystem.Extensions;
 using ExpenseControlSystem.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ builder
         .AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<CategoryServices>();
+builder.Services.AddScoped<UserServices>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ExpenseControlSystem.Data.ExpenseControlSystemDataContext>(options =>
     options.UseSqlite(connectionString));

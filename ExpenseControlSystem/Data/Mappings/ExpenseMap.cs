@@ -33,19 +33,30 @@ namespace ExpenseControlSystem.Data.Mappings {
                     Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                     Description = "Compra de lanche pelo Ifood",
                     Amount = 50.0m,
-                    DueDate = new DateTime(2025, 12, 25), 
+                    DueDate = new DateTime(2025, 12, 25),
                     IsPaid = true,
                     CreatedAt = new DateTime(2025, 12, 25),
                     SubCategoryId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    UserId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa") 
+                    UserId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                 },
 
                 new Expense {
                     Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                     Description = "Ida ao trabalho",
                     Amount = 28.50m,
-                    DueDate = new DateTime(2025, 12, 20), 
+                    DueDate = new DateTime(2025, 12, 20),
                     IsPaid = true,
+                    CreatedAt = new DateTime(2025, 12, 20),
+                    SubCategoryId = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                    UserId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+                },
+
+                new Expense {
+                    Id = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                    Description = "viagem de uber para a praia",
+                    Amount = 130.0m,
+                    DueDate = new DateTime(2025, 12, 27),
+                    IsPaid = false,
                     CreatedAt = new DateTime(2025, 12, 20),
                     SubCategoryId = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                     UserId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")

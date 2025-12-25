@@ -27,15 +27,14 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var categories = await categoryServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
+                var (categories, total) = await categoryServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
 
                 var result = new PagedResultDto<ResponseCategoryDto> {
                     Result = categories,
-                    Total = categories.Count,
+                    Total = total,
                     Page = dto.Page.Value,
                     PageSize = dto.PageSize.Value
                 };
-
 
                 return Ok(new ResultViewModel<PagedResultDto<ResponseCategoryDto>>(result));
             }

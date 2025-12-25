@@ -1,7 +1,6 @@
 ﻿using ExpenseControlSystem.Data.Mappings;
 using ExpenseControlSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ExpenseControlSystem.Data {
     public class ExpenseControlSystemDataContext : DbContext {

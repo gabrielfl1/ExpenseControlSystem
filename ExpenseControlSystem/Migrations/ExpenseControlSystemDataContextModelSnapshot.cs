@@ -116,6 +116,17 @@ namespace ExpenseControlSystem.Migrations
                             IsPaid = true,
                             SubCategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                             UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            Amount = 130.0m,
+                            CreatedAt = new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "viagem de uber para a praia",
+                            DueDate = new DateTime(2025, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsPaid = false,
+                            SubCategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
                         });
                 });
 

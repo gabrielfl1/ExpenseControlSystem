@@ -8,24 +8,26 @@ using ExpenseControlSystem.Enums;
 namespace ExpenseControlSystem.Services {
     public class CategoryServices {
 
-        public async Task<List<ResponseCategoryDto>> Get(
+        public async Task<(List<ResponseCategoryDto>, int total)> Get(
             ExpenseControlSystemDataContext context,
             int page,
             int pageSize) {
+
+            var total = await context.Categories.CountAsync();
 
             var categories = await context
                 .Categories
                 .AsNoTracking()
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .Select(x => new ResponseCategoryDto {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description
+                })
                 .ToListAsync();
 
-            return categories.Select(category => new ResponseCategoryDto {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description
-
-            }).ToList();
+            return (categories, total);
         }
 
         public async Task<ServiceResult<ResponseCategoryDto>> GetById(
@@ -36,7 +38,6 @@ namespace ExpenseControlSystem.Services {
                 .Categories
                 .AsNoTracking()
                 .Include(x => x.SubCategories)
-                .ThenInclude(x => x.Expenses)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (category == null)
@@ -65,7 +66,7 @@ namespace ExpenseControlSystem.Services {
             ExpenseControlSystemDataContext context,
             PostCategoryDto dto) {
 
-            dto.Name = StringExtensions.StringEditor(dto.Name);
+            dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
             if (await context.Categories.AnyAsync(x => x.Name == dto.Name))
                 return new ServiceResult<ResponseCategoryDto> {
@@ -107,7 +108,7 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
-            dto.Name = StringExtensions.StringEditor(dto.Name);
+            dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
             if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
                 return new ServiceResult<ResponseCategoryDto> {
@@ -146,17 +147,18 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
-            dto.Name = StringExtensions.StringEditor(dto.Name);
+            if (dto.Name != null) {
+                dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
-            if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
-                return new ServiceResult<ResponseCategoryDto> {
-                    Success = false,
-                    Error = "01x15 - Já existe uma categoria com esse nome",
-                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
-                };
+                if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
+                    return new ServiceResult<ResponseCategoryDto> {
+                        Success = false,
+                        Error = "01x15 - Já existe uma categoria com esse nome",
+                        ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                    };
 
-            if (dto.Name != null)
-                 category.Name = dto.Name;
+                category.Name = dto.Name;
+            }
 
             if (dto.Description != null)
                 category.Description = dto.Description;
@@ -173,7 +175,6 @@ namespace ExpenseControlSystem.Services {
                 }
             };
         }
-
         public async Task<ServiceResult<ResponseCategoryDto>> Delete(
             ExpenseControlSystemDataContext context,
             Guid id) {
