@@ -1,7 +1,8 @@
+using ExpenseControlSystem.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+ 
 
 builder
     .Services
@@ -16,6 +17,7 @@ builder
         .AddSwaggerGen()
         .AddEndpointsApiExplorer();
 
+builder.Services.AddScoped<CategoryServices>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ExpenseControlSystem.Data.ExpenseControlSystemDataContext>(options =>
     options.UseSqlite(connectionString));

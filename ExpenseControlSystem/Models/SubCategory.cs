@@ -7,6 +7,7 @@
 
 
         // associação
+        public Guid CategoryId{ get; set; }
         public Category Category{ get; set; }
         public List<Expense> Expenses { get; set; } = new List<Expense>();
     }

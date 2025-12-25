@@ -18,6 +18,12 @@ namespace ExpenseControlSystem.Data.Mappings {
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();
+
+
+            builder.HasData(
+                new Category { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), Name = "Alimentação", Description = "Despesa com alimentação"},
+                new Category { Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), Name = "Transporte", Description = "Despesa com transporte" }
+            );
         }
     }
 }

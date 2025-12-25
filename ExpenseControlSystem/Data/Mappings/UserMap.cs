@@ -1,6 +1,7 @@
 ﻿using ExpenseControlSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Xml.Linq;
 
 namespace ExpenseControlSystem.Data.Mappings {
     public class UserMap : IEntityTypeConfiguration<User> {
@@ -16,6 +17,9 @@ namespace ExpenseControlSystem.Data.Mappings {
             builder.HasIndex(x => x.Email)
                 .IsUnique();
 
+            builder.HasData(
+                new User { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), Name = "User", Email = "teste@gmail.com", CreatedAt = new DateTime(2025,12,25) }
+            );
         }
     }
 }
