@@ -39,10 +39,10 @@ namespace ExpenseControlSystem.Controllers {
                 return Ok(new ResultViewModel<PagedResultDto<ResponseUserDto>>(result));
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x01 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x01 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x02 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x02 - Erro interno de servidor"));
             }
         }
 
@@ -84,10 +84,10 @@ namespace ExpenseControlSystem.Controllers {
                 return Ok(new ResultViewModel<ResponseUserDto>(responseDto));
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x03 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x04 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x04 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x05 - Erro interno de servidor"));
             }
         }
 
@@ -124,10 +124,10 @@ namespace ExpenseControlSystem.Controllers {
                     new ResultViewModel<ResponseUserDto>(user.Result));
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x03 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x07 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x04 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x08 - Erro interno de servidor"));
             }
         }
 
@@ -162,10 +162,10 @@ namespace ExpenseControlSystem.Controllers {
                 return Ok(new ResultViewModel<ResponseUserDto>(user.Result));
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x03 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x11 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x04 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x12 - Erro interno de servidor"));
             }
         }
 
@@ -200,10 +200,10 @@ namespace ExpenseControlSystem.Controllers {
                 return Ok(new ResultViewModel<ResponseUserDto>(user.Result));
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x03 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x15 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x04 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x16 - Erro interno de servidor"));
             }
         }
 
@@ -233,10 +233,10 @@ namespace ExpenseControlSystem.Controllers {
                 return Ok();
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("02x03 Erro ao tentar se conectar ao banco de dados"));
+                return StatusCode(500, new ResultViewModel<string>("02x18 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("02x04 Erro interno de servidor"));
+                return StatusCode(500, new ResultViewModel<string>("02x19 - Erro interno de servidor"));
             }
         }
 

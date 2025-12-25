@@ -5,9 +5,7 @@ using ExpenseControlSystem.DTOs.UserDtos;
 using ExpenseControlSystem.Enums;
 using ExpenseControlSystem.Extensions;
 using ExpenseControlSystem.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ExpenseControlSystem.Services {
     public class UserServices {
@@ -49,7 +47,7 @@ namespace ExpenseControlSystem.Services {
             if (user == null) {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "Usuário não encontrado",
+                    Error = "02x03 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
@@ -94,7 +92,7 @@ namespace ExpenseControlSystem.Services {
             if (await context.Users.AnyAsync(x => x.Email == dto.Email))
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "02x05 - Não é possivel cadastrar um usuario com este E-mail",
+                    Error = "02x06 - Não é possivel cadastrar um usuario com este E-mail",
                     ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                 };
 
@@ -127,7 +125,7 @@ namespace ExpenseControlSystem.Services {
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "02x06 - Usuário não encontrado",
+                    Error = "02x09 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
@@ -136,7 +134,7 @@ namespace ExpenseControlSystem.Services {
             if (await context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "02x7 - Não é possivel atualizar um usuario com este E-mail",
+                    Error = "02x10 - Não é possivel atualizar um usuario com este E-mail",
                     ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                 };
 
@@ -169,7 +167,7 @@ namespace ExpenseControlSystem.Services {
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "02x08 - Usuário não encontrado",
+                    Error = "02x13 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
@@ -184,7 +182,7 @@ namespace ExpenseControlSystem.Services {
                 if (await context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
                     return new ServiceResult<ResponseUserDto> {
                         Success = false,
-                        Error = "02x9 - Não é possivel atualizar um usuario com este E-mail",
+                        Error = "02x14 - Não é possivel atualizar um usuario com este E-mail",
                         ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                     };
 
@@ -214,7 +212,7 @@ namespace ExpenseControlSystem.Services {
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
-                    Error = "02x10 - Usuário não encontrado",
+                    Error = "02x17 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
