@@ -1,6 +1,7 @@
 ﻿using ExpenseControlSystem.Data;
 using ExpenseControlSystem.DTOs;
 using ExpenseControlSystem.DTOs.CategoryDtos;
+using ExpenseControlSystem.Enums;
 using ExpenseControlSystem.Extensions;
 using ExpenseControlSystem.Models;
 using ExpenseControlSystem.Services;
@@ -57,11 +58,18 @@ namespace ExpenseControlSystem.Controllers {
                 var category = await categoryServices.GetById(context, id);
 
                 if (!category.Success) {
-                    return NotFound(new ResultViewModel<string>(category.Error));
+                    switch (category.ClientErrorStatusCode) {
+                        case EClientErrorStatusCode.NotFound:
+                            return NotFound(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.Conflict:
+                            return Conflict(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.BadRequest:
+                            return BadRequest(new ResultViewModel<string>(category.Error));
+                        default:
+                            return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
+                    }
                 }
-
                 return Ok(new ResultViewModel<ResponseCategoryDto>(category.Result));
-
             }
             catch (DbException) {
                 return StatusCode(500, new ResultViewModel<string>("01x04 - Erro ao tentar se conectar ao banco de dados"));
@@ -85,7 +93,16 @@ namespace ExpenseControlSystem.Controllers {
                 var category = await categoryServices.Post(context, dto);
 
                 if (!category.Success) {
-                    return BadRequest(new ResultViewModel<string>(category.Error));
+                    switch (category.ClientErrorStatusCode) {
+                        case EClientErrorStatusCode.NotFound:
+                            return NotFound(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.Conflict:
+                            return Conflict(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.BadRequest:
+                            return BadRequest(new ResultViewModel<string>(category.Error));
+                        default:
+                            return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
+                    }
                 }
 
                 return CreatedAtAction(
@@ -117,7 +134,16 @@ namespace ExpenseControlSystem.Controllers {
                 var category = await categoryServices.Put(context, dto, id);
 
                 if (!category.Success) {
-                    return BadRequest(new ResultViewModel<string>(category.Error));
+                    switch (category.ClientErrorStatusCode) {
+                        case EClientErrorStatusCode.NotFound:
+                            return NotFound(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.Conflict:
+                            return Conflict(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.BadRequest:
+                            return BadRequest(new ResultViewModel<string>(category.Error));
+                        default:
+                            return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
+                    }
                 }
 
                 return Ok(new ResultViewModel<ResponseCategoryDto>(category.Result));
@@ -146,7 +172,16 @@ namespace ExpenseControlSystem.Controllers {
                 var category = await categoryServices.Patch(context, dto, id);
 
                 if (!category.Success) {
-                    return BadRequest(new ResultViewModel<string>(category.Error));
+                    switch (category.ClientErrorStatusCode) {
+                        case EClientErrorStatusCode.NotFound:
+                            return NotFound(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.Conflict:
+                            return Conflict(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.BadRequest:
+                            return BadRequest(new ResultViewModel<string>(category.Error));
+                        default:
+                            return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
+                    }
                 }
 
                 return Ok(new ResultViewModel<ResponseCategoryDto>(category.Result));
@@ -169,7 +204,16 @@ namespace ExpenseControlSystem.Controllers {
                 var category = await categoryServices.Delete(context, id);
 
                 if (!category.Success) {
-                    return BadRequest(new ResultViewModel<string>(category.Error));
+                    switch (category.ClientErrorStatusCode) {
+                        case EClientErrorStatusCode.NotFound:
+                            return NotFound(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.Conflict:
+                            return Conflict(new ResultViewModel<string>(category.Error));
+                        case EClientErrorStatusCode.BadRequest:
+                            return BadRequest(new ResultViewModel<string>(category.Error));
+                        default:
+                            return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
+                    }
                 }
 
                 return Ok();

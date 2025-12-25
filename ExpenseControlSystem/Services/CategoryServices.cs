@@ -3,6 +3,7 @@ using ExpenseControlSystem.DTOs.CategoryDtos;
 using ExpenseControlSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using ExpenseControlSystem.Extensions;
+using ExpenseControlSystem.Enums;
 
 namespace ExpenseControlSystem.Services {
     public class CategoryServices {
@@ -41,7 +42,8 @@ namespace ExpenseControlSystem.Services {
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x03 - Categoria não encontrada"
+                    Error = "01x03 - Categoria não encontrada",
+                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
             return new ServiceResult<ResponseCategoryDto> {
@@ -68,7 +70,8 @@ namespace ExpenseControlSystem.Services {
             if (await context.Categories.AnyAsync(x => x.Name == dto.Name))
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x06 - Já existe uma categoria com esse nome"
+                    Error = "01x06 - Já existe uma categoria com esse nome",
+                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                 };
 
             var category = new Category {
@@ -100,7 +103,8 @@ namespace ExpenseControlSystem.Services {
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x10 - Categoria não encontrada"
+                    Error = "01x10 - Categoria não encontrada",
+                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
             dto.Name = StringExtensions.StringEditor(dto.Name);
@@ -108,7 +112,8 @@ namespace ExpenseControlSystem.Services {
             if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x11 - Já existe uma categoria com esse nome"
+                    Error = "01x11 - Já existe uma categoria com esse nome",
+                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                 };
 
             category.Name = dto.Name;
@@ -137,7 +142,8 @@ namespace ExpenseControlSystem.Services {
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x14 - Categoria não encontrada"
+                    Error = "01x14 - Categoria não encontrada",
+                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
             dto.Name = StringExtensions.StringEditor(dto.Name);
@@ -145,7 +151,8 @@ namespace ExpenseControlSystem.Services {
             if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x15 - Já existe uma categoria com esse nome"
+                    Error = "01x15 - Já existe uma categoria com esse nome",
+                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
                 };
 
             if (dto.Name != null)
@@ -176,7 +183,8 @@ namespace ExpenseControlSystem.Services {
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
-                    Error = "01x18 - Categoria não encontrada"
+                    Error = "01x18 - Categoria não encontrada",
+                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
             context.Categories.Remove(category!);
