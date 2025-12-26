@@ -27,7 +27,7 @@ namespace ExpenseControlSystem.Controllers {
             try {
 
                 var (subCategories, total) = await subCategoryServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
-
+                
                 var result = new PagedResultDto<ResponseSubCategoryDto> {
                     Result = subCategories,
                     Total = total,
