@@ -74,14 +74,7 @@ namespace ExpenseControlSystem.Controllers {
                     }
                 }
 
-                var responseDto = new ResponseUserDto {
-                    Id = user.Result.Id,
-                    Name = user.Result.Name,
-                    Email = user.Result.Email,
-                    CreatedAt = user.Result.CreatedAt,
-                    Expenses = user.Result.Expenses
-                };
-                return Ok(new ResultViewModel<ResponseUserDto>(responseDto));
+                return Ok(new ResultViewModel<ResponseUserDto>(user.Result));
             }
             catch (DbException) {
                 return StatusCode(500, new ResultViewModel<string>("02x04 - Erro ao tentar se conectar ao banco de dados"));
@@ -230,7 +223,7 @@ namespace ExpenseControlSystem.Controllers {
                     }
                 }
 
-                return Ok();
+                return NoContent();
             }
             catch (DbException) {
                 return StatusCode(500, new ResultViewModel<string>("02x18 - Erro ao tentar se conectar ao banco de dados"));

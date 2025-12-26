@@ -15,8 +15,7 @@ namespace ExpenseControlSystem.Data.Mappings {
             builder.Property(x => x.Description)
                 .HasMaxLength(250);
 
-            builder.HasIndex(x => x.Name)
-                .IsUnique();
+            builder.HasIndex(x => x.Name);
 
             builder
                 .HasOne(x => x.Category)

@@ -18,8 +18,9 @@ builder
         .AddSwaggerGen()
         .AddEndpointsApiExplorer();
 
-builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<CategoryServices>();
+builder.Services.AddScoped<SubCategoryServices>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ExpenseControlSystem.Data.ExpenseControlSystemDataContext>(options =>
     options.UseSqlite(connectionString));

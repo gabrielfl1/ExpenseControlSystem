@@ -152,8 +152,7 @@ namespace ExpenseControlSystem.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("SubCategories", (string)null);
 

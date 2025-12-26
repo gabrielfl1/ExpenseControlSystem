@@ -1,5 +1,4 @@
 ﻿using ExpenseControlSystem.Data;
-using ExpenseControlSystem.DTOs.CategoryDtos;
 using ExpenseControlSystem.DTOs.ExpenseDtos;
 using ExpenseControlSystem.DTOs.UserDtos;
 using ExpenseControlSystem.Enums;
@@ -41,7 +40,6 @@ namespace ExpenseControlSystem.Services {
             var user = await context
                 .Users
                 .AsNoTracking()
-                .Include(x => x.Expenses)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null) {
@@ -52,7 +50,8 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            IQueryable<Expense> expensesQuery = context.Expenses
+            IQueryable<Expense> expensesQuery = context
+                .Expenses
                 .AsNoTracking()
                 .Where(x => x.UserId == id);
 

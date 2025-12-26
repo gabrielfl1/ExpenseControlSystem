@@ -147,7 +147,7 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
-            if (dto.Name != null) {
+            if (string.IsNullOrWhiteSpace(dto.Name)) {
                 dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
                 if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
@@ -160,7 +160,7 @@ namespace ExpenseControlSystem.Services {
                 category.Name = dto.Name;
             }
 
-            if (dto.Description != null)
+            if (string.IsNullOrWhiteSpace(dto.Description))
                 category.Description = dto.Description;
 
             context.Categories.Update(category);

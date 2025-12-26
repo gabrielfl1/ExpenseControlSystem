@@ -150,8 +150,7 @@ namespace ExpenseControlSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SubCategories_Name",
                 table: "SubCategories",
-                column: "Name",
-                unique: true);
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",

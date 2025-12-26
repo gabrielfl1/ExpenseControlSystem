@@ -215,7 +215,7 @@ namespace ExpenseControlSystem.Controllers {
                     }
                 }
 
-                return Ok();
+                return NoContent();
             }
             catch (DbException) {
                 return StatusCode(500, new ResultViewModel<string>("01x19 Erro ao tentar se conectar ao banco de dados"));

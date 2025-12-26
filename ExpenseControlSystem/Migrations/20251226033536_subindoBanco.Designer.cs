@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseControlSystem.Migrations
 {
     [DbContext(typeof(ExpenseControlSystemDataContext))]
-    [Migration("20251225212027_subindoBanco")]
+    [Migration("20251226033536_subindoBanco")]
     partial class subindoBanco
     {
         /// <inheritdoc />
@@ -155,8 +155,7 @@ namespace ExpenseControlSystem.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.ToTable("SubCategories", (string)null);
 
