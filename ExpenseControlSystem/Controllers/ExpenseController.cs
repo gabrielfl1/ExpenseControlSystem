@@ -25,13 +25,14 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var (expenses, total) = await expenseServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
+                var (expenses, total, totalAmount) = await expenseServices.Get(context, dto);
 
                 var response = new PagedResultDto<ResponseExpenseDto> {
                     Result = expenses,
                     Total = total,
                     Page = dto.Page!.Value,
-                    PageSize = dto.PageSize!.Value
+                    PageSize = dto.PageSize!.Value,
+                    TotalAmount = totalAmount
 
                 };
 

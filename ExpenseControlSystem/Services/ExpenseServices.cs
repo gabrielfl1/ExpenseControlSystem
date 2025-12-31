@@ -7,22 +7,42 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpenseControlSystem.Services {
     public class ExpenseServices {
 
-        // preciso terminar o Get futuramente ele precisará do filtros opcionais de id da pessoa, id da subcategoria,
-        // se já foi pago (isPaid), se esta atrasado (Duedate)
-        // criar um parametro chamado totalAmount onde ele irá pegar o valor de todas as expenses daquele filtro e somar
-        // usarei IQueryable
-        public async Task<(List<ResponseExpenseDto>, int total)> Get(
+        public async Task<(List<ResponseExpenseDto>, int total, decimal totalAmount)> Get(
             ExpenseControlSystemDataContext context,
-            int page,
-            int pageSize) {
+            GetExpenseDto dto) {
 
-            int total = await context.Expenses.CountAsync();
+            IQueryable<Expense> expenseQuery = context.Expenses.AsNoTracking();
 
-            var expenses = await context
-                .Expenses
+            if (dto.UserId.HasValue) {
+                expenseQuery = expenseQuery.Where(x => x.UserId == dto.UserId.Value);
+            }
+
+            if (dto.SubCategoryId.HasValue) {
+                expenseQuery = expenseQuery.Where(x => x.SubCategoryId == dto.SubCategoryId.Value);
+            }
+
+            if (dto.IsPaid.HasValue) { 
+                expenseQuery = expenseQuery.Where(x => x.IsPaid == dto.IsPaid.Value);
+            }
+            
+            if (dto.LatePayment.HasValue) { 
+                if (dto.LatePayment == true) {
+                    expenseQuery = expenseQuery.Where(x => x.IsPaid == false && x.DueDate < DateTime.Now);
+                }
+                else {
+                    expenseQuery = expenseQuery.Where(x => x.IsPaid == true || x.DueDate >= DateTime.Now);
+                }
+                
+            }
+
+            int total = await expenseQuery.CountAsync();
+
+            decimal totalAmount = await expenseQuery.SumAsync(x => x.Amount);
+
+            var expenses = await expenseQuery
                 .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((dto.Page!.Value - 1) * dto.PageSize!.Value)
+                .Take(dto.PageSize!.Value)
                 .Select(x => new ResponseExpenseDto {
                     Id = x.Id,
                     Description = x.Description,
@@ -37,7 +57,7 @@ namespace ExpenseControlSystem.Services {
                 })
                 .ToListAsync();
 
-            return (expenses, total);
+            return (expenses, total, totalAmount);
         }
 
         public async Task<ServiceResult<ResponseExpenseDto>> GetById(

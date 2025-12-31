@@ -10,5 +10,12 @@ namespace ExpenseControlSystem.DTOs.ExpenseDtos {
         [Required(ErrorMessage = "PageSize é obrigatório")]
         [Range(1, 100, ErrorMessage = "A quantidade por pagina não deve exceder 100")]
         public int? PageSize { get; set; }
+
+
+
+        public Guid? UserId { get; set; }
+        public Guid? SubCategoryId { get; set; }
+        public bool? IsPaid { get; set; }
+        public bool? LatePayment { get; set; }
     }
 }
