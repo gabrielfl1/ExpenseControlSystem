@@ -104,7 +104,7 @@ namespace ExpenseControlSystem.Services {
             if (!userExists) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Usuário não encontrado",
+                    Error = "04x06 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
@@ -116,7 +116,7 @@ namespace ExpenseControlSystem.Services {
             if (!subCategoryExists) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Subcategoria não encontrada",
+                    Error = "04x07 - Subcategoria não encontrada",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
@@ -124,7 +124,7 @@ namespace ExpenseControlSystem.Services {
             if (dto.PaidAt != null && dto.PaidAt > DateTime.Now) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "PaidAt não pode conter uma data futura",
+                    Error = "04x08 - PaidAt não pode conter uma data futura",
                     ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
                 };
             }
@@ -180,7 +180,7 @@ namespace ExpenseControlSystem.Services {
             if (expense == null) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Despesa não encontrada",
+                    Error = "04x11 - Despesa não encontrada",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound,
                 };
             }
@@ -190,7 +190,7 @@ namespace ExpenseControlSystem.Services {
             if (!userExists) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Usuário não encontrado",
+                    Error = "04x12 - Usuário não encontrado",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
@@ -200,7 +200,7 @@ namespace ExpenseControlSystem.Services {
             if (!subCategoryExists) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Subcategoria não encontrada",
+                    Error = "04x13 - Subcategoria não encontrada",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
@@ -208,7 +208,7 @@ namespace ExpenseControlSystem.Services {
             if (dto.Amount <= 0) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "O valor do custo deve ser maior que zero",
+                    Error = "04x14 - O valor do custo deve ser maior que zero",
                     ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
                 };
             }
@@ -216,7 +216,7 @@ namespace ExpenseControlSystem.Services {
             if (dto.PaidAt != null && dto.PaidAt > DateTime.Now) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "PaidAt não pode conter uma data futura",
+                    Error = "04x15 - PaidAt não pode conter uma data futura",
                     ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
                 };
             }
@@ -270,7 +270,7 @@ namespace ExpenseControlSystem.Services {
             if (expense == null) {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
-                    Error = "Despesa não encontrada",
+                    Error = "04x18 - Despesa não encontrada",
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }

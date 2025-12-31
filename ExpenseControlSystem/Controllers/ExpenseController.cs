@@ -41,10 +41,10 @@ namespace ExpenseControlSystem.Controllers {
 
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("04x01"));
+                return StatusCode(500, new ResultViewModel<string>("04x01 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("04x02"));
+                return StatusCode(500, new ResultViewModel<string>("04x02 - Erro interno de servidor"));
             }
 
         }
@@ -76,10 +76,10 @@ namespace ExpenseControlSystem.Controllers {
 
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("04x04"));
+                return StatusCode(500, new ResultViewModel<string>("04x04 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("04x05"));
+                return StatusCode(500, new ResultViewModel<string>("04x05 - Erro interno de servidor"));
             }
 
         }
@@ -119,10 +119,10 @@ namespace ExpenseControlSystem.Controllers {
 
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("04x04"));
+                return StatusCode(500, new ResultViewModel<string>("04x09 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("04x05"));
+                return StatusCode(500, new ResultViewModel<string>("04x10 - Erro interno de servidor"));
             }
 
         }
@@ -159,17 +159,12 @@ namespace ExpenseControlSystem.Controllers {
 
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("04x04"));
+                return StatusCode(500, new ResultViewModel<string>("04x16 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("04x05"));
+                return StatusCode(500, new ResultViewModel<string>("04x17 - Erro interno de servidor"));
             }
         }
-
-
-
-
-
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
@@ -197,14 +192,11 @@ namespace ExpenseControlSystem.Controllers {
 
             }
             catch (DbException) {
-                return StatusCode(500, new ResultViewModel<string>("04x04"));
+                return StatusCode(500, new ResultViewModel<string>("04x19 - Erro ao tentar se conectar ao banco de dados"));
             }
             catch (Exception) {
-                return StatusCode(500, new ResultViewModel<string>("04x05"));
+                return StatusCode(500, new ResultViewModel<string>("04x20 - Erro interno de servidor"));
             }
         }
-
-
-        // Fazer o Put, Patch
     }
 }
