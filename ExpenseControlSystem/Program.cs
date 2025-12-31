@@ -21,6 +21,7 @@ builder
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<SubCategoryServices>();
+builder.Services.AddScoped<ExpenseServices>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ExpenseControlSystem.Data.ExpenseControlSystemDataContext>(options =>
     options.UseSqlite(connectionString));

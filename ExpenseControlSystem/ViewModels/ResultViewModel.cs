@@ -3,11 +3,6 @@
         public T Result { get; private set; }
         public List<string> Errors { get; private set; } = new();
 
-        public ResultViewModel(T result, List<string> errors) {
-            Result = result;
-            Errors = errors;
-        }
-
         public ResultViewModel(T result) {
             Result = result;
         }

@@ -81,7 +81,7 @@ namespace ExpenseControlSystem.Services {
                 SubCategories = new List<SubCategory>()
             };
 
-            context.Categories.Add(category);
+            await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
 
             return new ServiceResult<ResponseCategoryDto> {
