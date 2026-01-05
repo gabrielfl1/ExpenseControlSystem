@@ -1,0 +1,720 @@
+{
+	"info": {
+		"_postman_id": "94578037-7401-4c3f-be44-9df2ab13fefc",
+		"name": "Expense Control System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37110722"
+	},
+	"item": [
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Criar uma categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Teste\",\r\n\r\n    // opcional\r\n    \"description\" :\"adicionando uma descrição\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todas as categorias",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/categories?Page=1&pagesize=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar uma categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/categories/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Alimentação alterada\",\r\n\r\n    // opcional, valor padrão null\r\n    \"description\" : \"Despesa com alimentação alterada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/categories/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar categoria parcial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // opcional\r\n    \"name\" : \"Alimentação\",\r\n    \"description\" : \"Despesa com alimentação\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/categories/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar uma categoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/categories/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"categories",
+								"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subcategoria",
+			"item": [
+				{
+					"name": "Criar uma subcategoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"teste\",\r\n    \"CategoryId\" : \"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\",\r\n\r\n    // opcional\r\n    \"description\" :\"adicionando uma descrição\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todas as subcategorias",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories?Page=1&pagesize=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar uma subcategoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories/cccccccc-cccc-cccc-cccc-cccccccccccc?isPaid=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories",
+								"cccccccc-cccc-cccc-cccc-cccccccccccc"
+							],
+							"query": [
+								{
+									"key": "isPaid",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar subcategoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"ifood alteado\",\r\n    \"CategoryId\" : \"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb\",\r\n\r\n    // opcional, valor padrão null\r\n    \"description\" : \"adicionando uma descrição alterada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories/815f6bb9-64a4-43b3-aa34-76bfa866ee93",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories",
+								"815f6bb9-64a4-43b3-aa34-76bfa866ee93"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar subcategoria parcial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // opcional\r\n    \"name\" : \"Alimentação\",\r\n    \"CategoryId\": \"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb\",\r\n    \"description\" : \"Despesa com alimentação alteada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories/815f6bb9-64a4-43b3-aa34-76bfa866ee93",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories",
+								"815f6bb9-64a4-43b3-aa34-76bfa866ee93"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar uma subcategoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/subcategories/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"subcategories",
+								"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Despesas",
+			"item": [
+				{
+					"name": "Criar uma despesa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Description\" : \"teste\",\r\n    \"Amount\" : 10.0,\r\n    \"DueDate\" : \"2025-12-31\",\r\n    \"IsPaid\" : false,\r\n    \"UserId\" : \"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\",\r\n    \"SubCategoryId\" : \"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\",\r\n\r\n    // opcional\r\n    \"PaidAt\": \"2026-01-31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/expenses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todas as despesas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/expenses?Page=1&pagesize=10&UserId=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&SubCategoryId=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&IsPaid=false&LatePayment=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"expenses"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "10"
+								},
+								{
+									"key": "UserId",
+									"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+								},
+								{
+									"key": "SubCategoryId",
+									"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+								},
+								{
+									"key": "IsPaid",
+									"value": "false"
+								},
+								{
+									"key": "LatePayment",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar uma despesa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/expenses/cccccccc-cccc-cccc-cccc-cccccccccccc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"expenses",
+								"cccccccc-cccc-cccc-cccc-cccccccccccc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar despesa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"ifood alteado\",\r\n    \"Amount\" : 15.0,\r\n    \"DueDate\" : \"2026-01-06\",\r\n    \"UserId\" : \"3dd11584-d62b-4a1b-a476-4e67b7db5fcd\",\r\n    \"SubCategoryId\" : \"b92ebe41-9da6-4020-aa2c-1932a7676de7\",\r\n\r\n    // opcional\r\n    \"description\" : \"adicionando uma descrição alterada\",\r\n    \"IsPaid\" : false,\r\n    \"PaidAt\" : \"2026-01-05\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/expenses/2feee62e-73e4-44fe-bc61-89b2f697f5e1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"expenses",
+								"2feee62e-73e4-44fe-bc61-89b2f697f5e1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar uma despesa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/expenses/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"expenses",
+								"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Criar um usuário",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"teste\",\r\n    \"email\" :\"teste2@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os usuário",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/users?Page=1&pagesize=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "pagesize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar um usuário",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/users/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa?ispaid=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							],
+							"query": [
+								{
+									"key": "ispaid",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar usuário",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"teste2\",\r\n    \"email\" : \"teste2@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/users/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar usuário parcial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // opcional\r\n    \"name\" : \"teste2\",\r\n    \"email\" : \"teste2@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5132/v1/users/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users",
+								"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar um usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5132/v1/users/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5132",
+							"path": [
+								"v1",
+								"users",
+								"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
