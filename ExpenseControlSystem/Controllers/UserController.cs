@@ -15,11 +15,15 @@ namespace ExpenseControlSystem.Controllers {
 
     public class UserController : ControllerBase {
 
+        private readonly UserServices _userServices;
+
+        public UserController(UserServices userServices) { 
+            _userServices = userServices;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(
-            [FromQuery] GetUserDto dto,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetUserDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -27,7 +31,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var (users, total) = await userServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
+                var (users, total) = await _userServices.Get(dto);
 
                 var result = new PagedResultDto<ResponseUserDto> {
                     Result = users,
@@ -49,9 +53,7 @@ namespace ExpenseControlSystem.Controllers {
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(
             [FromRoute] Guid id,
-            [FromQuery] GetByIdUserDto dto,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetByIdUserDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -59,7 +61,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var user = await userServices.GetById(context, id, dto);
+                var user = await _userServices.GetById(id, dto);
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
@@ -86,9 +88,7 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post(
-            [FromBody] PostUserDto dto,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PostUserDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -96,7 +96,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var user = await userServices.Post(context, dto);
+                var user = await _userServices.Post(dto);
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
@@ -127,9 +127,7 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(
             [FromRoute] Guid id,
-            [FromBody] PutUserDto dto,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PutUserDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -137,7 +135,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var user = await userServices.Put(context, dto, id);
+                var user = await _userServices.Put(dto, id);
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
@@ -165,9 +163,7 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPatch("{id:guid}")]
         public async Task<IActionResult> Patch(
             [FromRoute] Guid id,
-            [FromBody] PatchUserDto dto,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PatchUserDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -175,7 +171,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var user = await userServices.Patch(context, dto, id);
+                var user = await _userServices.Patch(dto, id);
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
@@ -202,13 +198,11 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
-            [FromRoute] Guid id,
-            [FromServices] UserServices userServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromRoute] Guid id) {
 
             try {
 
-                var user = await userServices.Delete(context, id);
+                var user = await _userServices.Delete(id);
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {

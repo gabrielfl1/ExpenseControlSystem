@@ -9,18 +9,22 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpenseControlSystem.Services {
     public class UserServices {
 
+        private readonly ExpenseControlSystemDataContext _context;
+
+        public UserServices(ExpenseControlSystemDataContext context) {
+            _context = context;
+        }
+
         public async Task<(List<ResponseUserDto>, int total)> Get(
-            ExpenseControlSystemDataContext context,
-            int page,
-            int pageSize) {
+            GetUserDto dto) {
 
-            int total = await context.Users.CountAsync();
+            int total = await _context.Users.CountAsync();
 
-            var users = await context
+            var users = await _context
                 .Users
                 .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((dto.Page!.Value - 1) * dto.PageSize!.Value)
+                .Take(dto.PageSize!.Value)
                 .Select(user => new ResponseUserDto {
                     Id = user.Id,
                     Name = user.Name,
@@ -33,11 +37,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseUserDto>> GetById(
-            ExpenseControlSystemDataContext context,
             Guid id,
             GetByIdUserDto dto) {
 
-            var user = await context
+            var user = await _context
                 .Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -50,7 +53,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            IQueryable<Expense> expensesQuery = context
+            IQueryable<Expense> expensesQuery = _context
                 .Expenses
                 .AsNoTracking()
                 .Where(x => x.UserId == id);
@@ -82,13 +85,12 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseUserDto>> Post(
-            ExpenseControlSystemDataContext context,
             PostUserDto dto) {
 
             dto.Name = StringExtensions.StringNameEditor(dto.Name);
             dto.Email = dto.Email.Trim().ToLower();
 
-            if (await context.Users.AnyAsync(x => x.Email == dto.Email))
+            if (await _context.Users.AnyAsync(x => x.Email == dto.Email))
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x06 - Não é possivel cadastrar um usuario com este E-mail",
@@ -100,8 +102,8 @@ namespace ExpenseControlSystem.Services {
                 Email = dto.Email,
             };
 
-            await context.AddAsync(user);
-            await context.SaveChangesAsync();
+            await _context.AddAsync(user);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseUserDto> {
                 Success = true,
@@ -115,11 +117,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseUserDto>> Put(
-            ExpenseControlSystemDataContext context,
             PutUserDto dto,
             Guid id) {
 
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
@@ -130,7 +131,7 @@ namespace ExpenseControlSystem.Services {
 
             dto.Email = dto.Email.Trim().ToLower();
 
-            if (await context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
+            if (await _context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x10 - Não é possivel atualizar um usuario com este E-mail",
@@ -142,8 +143,8 @@ namespace ExpenseControlSystem.Services {
             user.Name = dto.Name;
             user.Email = dto.Email;
 
-            context.Update(user);
-            await context.SaveChangesAsync();
+            _context.Update(user);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseUserDto> {
                 Success = true,
@@ -157,11 +158,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseUserDto>> Patch(
-            ExpenseControlSystemDataContext context,
             PatchUserDto dto,
             Guid id) {
 
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
@@ -178,7 +178,7 @@ namespace ExpenseControlSystem.Services {
             if (!string.IsNullOrWhiteSpace(dto.Email)) {
                 dto.Email = dto.Email.Trim().ToLower();
 
-                if (await context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
+                if (await _context.Users.AnyAsync(x => x.Email == dto.Email && x.Id != id))
                     return new ServiceResult<ResponseUserDto> {
                         Success = false,
                         Error = "02x14 - Não é possivel atualizar um usuario com este E-mail",
@@ -188,8 +188,8 @@ namespace ExpenseControlSystem.Services {
                 user.Email = dto.Email;
             }
 
-            context.Update(user);
-            await context.SaveChangesAsync();
+            _context.Update(user);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseUserDto> {
                 Success = true,
@@ -203,10 +203,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseUserDto>> Delete(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
                 return new ServiceResult<ResponseUserDto> {
@@ -215,8 +214,8 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
-            context.Remove(user);
-            await context.SaveChangesAsync();
+            _context.Remove(user);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseUserDto> {
                 Success = true

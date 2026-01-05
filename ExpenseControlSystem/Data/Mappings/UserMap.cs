@@ -17,9 +17,6 @@ namespace ExpenseControlSystem.Data.Mappings {
             builder.HasIndex(x => x.Email)
                 .IsUnique();
 
-            builder.HasData(
-                new User { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), Name = "User", Email = "teste@gmail.com", CreatedAt = new DateTime(2025,12,25) }
-            );
         }
     }
 }

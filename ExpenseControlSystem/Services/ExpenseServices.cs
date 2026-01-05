@@ -7,11 +7,16 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpenseControlSystem.Services {
     public class ExpenseServices {
 
+        private readonly ExpenseControlSystemDataContext _context;
+
+        public ExpenseServices(ExpenseControlSystemDataContext context) {
+            _context = context;
+        }
+
         public async Task<(List<ResponseExpenseDto>, int total, decimal totalAmount)> Get(
-            ExpenseControlSystemDataContext context,
             GetExpenseDto dto) {
 
-            IQueryable<Expense> expenseQuery = context.Expenses.AsNoTracking();
+            IQueryable<Expense> expenseQuery = _context.Expenses.AsNoTracking();
 
             if (dto.UserId.HasValue) {
                 expenseQuery = expenseQuery.Where(x => x.UserId == dto.UserId.Value);
@@ -61,10 +66,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseExpenseDto>> GetById(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var expenses = await context
+            var expenses = await _context
                 .Expenses
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -94,10 +98,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseExpenseDto>> Post(
-            ExpenseControlSystemDataContext context,
             PostExpenseDto dto) {
 
-            var userExists = await context.Users
+            var userExists = await _context.Users
             .AsNoTracking()
             .AnyAsync(x => x.Id == dto.UserId);
 
@@ -109,7 +112,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            var subCategoryExists = await context.SubCategories
+            var subCategoryExists = await _context.SubCategories
                 .AsNoTracking()
                 .AnyAsync(x => x.Id == dto.SubCategoryId);
 
@@ -150,8 +153,8 @@ namespace ExpenseControlSystem.Services {
                 UserId = dto.UserId!.Value,
             };
 
-            await context.AddAsync(expense);
-            await context.SaveChangesAsync();
+            await _context.AddAsync(expense);
+            await _context.SaveChangesAsync();
 
 
             return new ServiceResult<ResponseExpenseDto> {
@@ -171,11 +174,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseExpenseDto>> Put(
-            ExpenseControlSystemDataContext context,
             PutExpenseDto dto,
             Guid id) {
 
-            var expense = await context.Expenses.FirstOrDefaultAsync(x => x.Id == id);
+            var expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == id);
 
             if (expense == null) {
                 return new ServiceResult<ResponseExpenseDto> {
@@ -185,7 +187,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            var userExists = await context.Users.AsNoTracking().AnyAsync(x => x.Id == dto.UserId);
+            var userExists = await _context.Users.AsNoTracking().AnyAsync(x => x.Id == dto.UserId);
 
             if (!userExists) {
                 return new ServiceResult<ResponseExpenseDto> {
@@ -195,7 +197,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            var subCategoryExists = await context.SubCategories.AsNoTracking().AnyAsync(x => x.Id == dto.SubCategoryId);
+            var subCategoryExists = await _context.SubCategories.AsNoTracking().AnyAsync(x => x.Id == dto.SubCategoryId);
 
             if (!subCategoryExists) {
                 return new ServiceResult<ResponseExpenseDto> {
@@ -241,8 +243,8 @@ namespace ExpenseControlSystem.Services {
             expense.SubCategoryId = dto.SubCategoryId!.Value;
             expense.UserId = dto.UserId!.Value;
 
-            context.Update(expense);
-            await context.SaveChangesAsync();
+            _context.Update(expense);
+            await _context.SaveChangesAsync();
 
 
             return new ServiceResult<ResponseExpenseDto> {
@@ -262,10 +264,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseExpenseDto>> Delete(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var expense = await context.Expenses.FirstOrDefaultAsync(x => x.Id == id);
+            var expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == id);
 
             if (expense == null) {
                 return new ServiceResult<ResponseExpenseDto> {
@@ -274,8 +275,8 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
             }
-            context.Remove(expense);
-            await context.SaveChangesAsync();
+            _context.Remove(expense);
+            await _context.SaveChangesAsync();
 
 
             return new ServiceResult<ResponseExpenseDto> {

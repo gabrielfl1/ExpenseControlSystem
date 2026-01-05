@@ -3,7 +3,7 @@ using ExpenseControlSystem.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
- 
+
 
 builder
     .Services
@@ -28,10 +28,10 @@ builder.Services.AddDbContext<ExpenseControlSystem.Data.ExpenseControlSystemData
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 

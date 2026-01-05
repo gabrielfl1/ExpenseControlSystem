@@ -10,18 +10,22 @@ using Microsoft.EntityFrameworkCore;
 namespace ExpenseControlSystem.Services {
     public class SubCategoryServices {
 
+        private readonly ExpenseControlSystemDataContext _context;
+
+        public SubCategoryServices(ExpenseControlSystemDataContext context) {
+            _context = context;
+        }
+
         public async Task<(List<ResponseSubCategoryDto>, int total)> Get(
-            ExpenseControlSystemDataContext context,
-            int page,
-            int pageSize) {
+            GetSubCategoryDto dto) {
 
-            int total = await context.SubCategories.CountAsync();
+            int total = await _context.SubCategories.CountAsync();
 
-            var subCategories = await context
+            var subCategories = await _context
                 .SubCategories
                 .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((dto.Page!.Value - 1) * dto.PageSize!.Value)
+                .Take(dto.PageSize!.Value)
                 .Select(x => new ResponseSubCategoryDto {
                     Id = x.Id,
                     Name = x.Name,
@@ -34,11 +38,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseSubCategoryDto>> GetById(
-            ExpenseControlSystemDataContext context,
             GetByIdSubCategoryDto dto,
             Guid id) {
 
-            var subCategory = await context
+            var subCategory = await _context
                 .SubCategories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -51,7 +54,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            IQueryable<Expense> expenseQuery = context
+            IQueryable<Expense> expenseQuery = _context
                 .Expenses
                 .AsNoTracking()
                 .Where(x => x.SubCategoryId == subCategory.Id);
@@ -83,12 +86,11 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseSubCategoryDto>> Post(
-            ExpenseControlSystemDataContext context,
             PostSubCategoryDto dto) {
 
             dto.Name = StringExtensions.StringNameEditor(dto.Name);
 
-            if (await context.SubCategories.AnyAsync(x => x.Name == dto.Name && x.CategoryId == dto.CategoryId)) {
+            if (await _context.SubCategories.AnyAsync(x => x.Name == dto.Name && x.CategoryId == dto.CategoryId)) {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x06 - Já existe uma subcategoria com esse nome nesta categoria",
@@ -96,7 +98,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            var categoryExists = await context
+            var categoryExists = await _context
                 .Categories
                 .AsNoTracking()
                 .AnyAsync(x => x.Id == dto.CategoryId);
@@ -115,8 +117,8 @@ namespace ExpenseControlSystem.Services {
                 CategoryId = dto.CategoryId!.Value
             };
 
-            await context.SubCategories.AddAsync(category);
-            await context.SaveChangesAsync();
+            await _context.SubCategories.AddAsync(category);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseSubCategoryDto> {
                 Success = true,
@@ -130,11 +132,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseSubCategoryDto>> Put(
-            ExpenseControlSystemDataContext context,
             PutSubCategoryDto dto,
             Guid id) {
 
-            var subCategory = await context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
+            var subCategory = await _context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (subCategory == null) {
                 return new ServiceResult<ResponseSubCategoryDto> {
@@ -144,7 +145,7 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            var categoryExists = await context
+            var categoryExists = await _context
                 .Categories
                 .AsNoTracking()
                 .AnyAsync(x => x.Id == dto.CategoryId);
@@ -159,7 +160,7 @@ namespace ExpenseControlSystem.Services {
 
             dto.Name = StringExtensions.StringNameEditor(dto.Name);
 
-            if (await context
+            if (await _context
                 .SubCategories
                 .AnyAsync(x => x.Name == dto.Name && x.CategoryId == dto.CategoryId && x.Id != id)) {
 
@@ -175,8 +176,8 @@ namespace ExpenseControlSystem.Services {
             subCategory.CategoryId = dto.CategoryId!.Value;
 
 
-            context.SubCategories.Update(subCategory);
-            await context.SaveChangesAsync();
+            _context.SubCategories.Update(subCategory);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseSubCategoryDto> {
                 Success = true,
@@ -190,11 +191,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseSubCategoryDto>> Patch(
-            ExpenseControlSystemDataContext context,
             PatchSubCategoryDto dto,
             Guid id) {
 
-            var subCategory = await context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
+            var subCategory = await _context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (subCategory == null) {
                 return new ServiceResult<ResponseSubCategoryDto> {
@@ -206,7 +206,7 @@ namespace ExpenseControlSystem.Services {
 
             if (dto.CategoryId != null) {
 
-                var categoryExists = await context
+                var categoryExists = await _context
                     .Categories
                     .AsNoTracking()
                     .AnyAsync(x => x.Id == dto.CategoryId);
@@ -227,7 +227,7 @@ namespace ExpenseControlSystem.Services {
 
                 var categoryIdToCheck = dto.CategoryId ?? subCategory.CategoryId;
 
-                if (await context
+                if (await _context
                     .SubCategories
                     .AnyAsync(x => x.Name == dto.Name && x.CategoryId == categoryIdToCheck && x.Id != id)) {
 
@@ -244,8 +244,8 @@ namespace ExpenseControlSystem.Services {
                 subCategory.Description = dto.Description;
             }
 
-            context.SubCategories.Update(subCategory);
-            await context.SaveChangesAsync();
+            _context.SubCategories.Update(subCategory);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseSubCategoryDto> {
                 Success = true,
@@ -259,10 +259,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseSubCategoryDto>> Delete(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var subCategory = await context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
+            var subCategory = await _context.SubCategories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (subCategory == null) {
                 return new ServiceResult<ResponseSubCategoryDto> {
@@ -272,8 +271,8 @@ namespace ExpenseControlSystem.Services {
                 };
             }
 
-            context.SubCategories.Remove(subCategory);
-            await context.SaveChangesAsync();
+            _context.SubCategories.Remove(subCategory);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseSubCategoryDto> {
                 Success = true

@@ -13,11 +13,15 @@ namespace ExpenseControlSystem.Controllers {
     [Route("v1/Expenses")]
     public class ExpenseController : ControllerBase {
 
+        private readonly ExpenseServices _expenseServices;
+
+        public ExpenseController(ExpenseServices expenseServices) { 
+            _expenseServices = expenseServices;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(
-            [FromQuery] GetExpenseDto dto,
-            [FromServices] ExpenseServices expenseServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetExpenseDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -25,7 +29,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var (expenses, total, totalAmount) = await expenseServices.Get(context, dto);
+                var (expenses, total, totalAmount) = await _expenseServices.Get(dto);
 
                 var response = new PagedResultDto<ResponseExpenseDto> {
                     Result = expenses,
@@ -51,13 +55,11 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(
-            [FromRoute] Guid id,
-            [FromServices] ExpenseServices expenseServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromRoute] Guid id) {
 
             try {
 
-                var expense = await expenseServices.GetById(context, id);
+                var expense = await _expenseServices.GetById(id);
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
@@ -86,9 +88,7 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post(
-            [FromBody] PostExpenseDto dto,
-            [FromServices] ExpenseServices expenseServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PostExpenseDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -96,7 +96,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var expense = await expenseServices.Post(context, dto);
+                var expense = await _expenseServices.Post(dto);
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
@@ -130,9 +130,7 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(
             [FromRoute] Guid id,
-            [FromBody] PutExpenseDto dto,
-            [FromServices] ExpenseServices expenseServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PutExpenseDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -140,7 +138,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var expense = await expenseServices.Put(context, dto, id);
+                var expense = await _expenseServices.Put(dto, id);
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
@@ -168,13 +166,11 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
-            [FromRoute] Guid id,
-            [FromServices] ExpenseServices expenseServices,
-            [FromServices] ExpenseControlSystemDataContext context) { 
+            [FromRoute] Guid id) { 
             
             try {
 
-                var expense = await expenseServices.Delete(context, id);
+                var expense = await _expenseServices.Delete(id);
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
                         case EClientErrorStatusCode.NotFound:

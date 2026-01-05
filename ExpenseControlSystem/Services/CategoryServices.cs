@@ -8,18 +8,22 @@ using ExpenseControlSystem.Enums;
 namespace ExpenseControlSystem.Services {
     public class CategoryServices {
 
+        private readonly ExpenseControlSystemDataContext _context;
+
+        public CategoryServices(ExpenseControlSystemDataContext dataContext) {
+            _context = dataContext;
+        }
+
         public async Task<(List<ResponseCategoryDto>, int total)> Get(
-            ExpenseControlSystemDataContext context,
-            int page,
-            int pageSize) {
+            GetCategoryDto dto) {
 
-            var total = await context.Categories.CountAsync();
+            var total = await _context.Categories.CountAsync();
 
-            var categories = await context
+            var categories = await _context
                 .Categories
                 .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((dto.Page!.Value - 1) * dto.PageSize!.Value)
+                .Take(dto.PageSize!.Value)
                 .Select(x => new ResponseCategoryDto {
                     Id = x.Id,
                     Name = x.Name,
@@ -31,10 +35,9 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseCategoryDto>> GetById(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var category = await context
+            var category = await _context
                 .Categories
                 .AsNoTracking()
                 .Include(x => x.SubCategories)
@@ -63,12 +66,11 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseCategoryDto>> Post(
-            ExpenseControlSystemDataContext context,
             PostCategoryDto dto) {
 
             dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
-            if (await context.Categories.AnyAsync(x => x.Name == dto.Name))
+            if (await _context.Categories.AnyAsync(x => x.Name == dto.Name))
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
                     Error = "01x06 - Já existe uma categoria com esse nome",
@@ -81,8 +83,8 @@ namespace ExpenseControlSystem.Services {
                 SubCategories = new List<SubCategory>()
             };
 
-            await context.Categories.AddAsync(category);
-            await context.SaveChangesAsync();
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseCategoryDto> {
                 Success = true,
@@ -95,11 +97,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseCategoryDto>> Put(
-            ExpenseControlSystemDataContext context,
             PutCategoryDto dto,
             Guid id) {
 
-            var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
@@ -110,7 +111,7 @@ namespace ExpenseControlSystem.Services {
 
             dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
-            if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
+            if (await _context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
                 return new ServiceResult<ResponseCategoryDto> {
                     Success = false,
                     Error = "01x11 - Já existe uma categoria com esse nome",
@@ -120,8 +121,8 @@ namespace ExpenseControlSystem.Services {
             category.Name = dto.Name;
             category.Description = dto.Description;
 
-            context.Categories.Update(category);
-            await context.SaveChangesAsync();
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseCategoryDto> {
                 Success = true,
@@ -134,11 +135,10 @@ namespace ExpenseControlSystem.Services {
         }
 
         public async Task<ServiceResult<ResponseCategoryDto>> Patch(
-            ExpenseControlSystemDataContext context,
             PatchCategoryDto dto,
             Guid id) {
 
-            var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
@@ -150,7 +150,7 @@ namespace ExpenseControlSystem.Services {
             if (!string.IsNullOrWhiteSpace(dto.Name)) {
                 dto.Name = StringExtensions.StringTitleEditor(dto.Name);
 
-                if (await context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
+                if (await _context.Categories.AnyAsync(x => x.Name == dto.Name && x.Id != id))
                     return new ServiceResult<ResponseCategoryDto> {
                         Success = false,
                         Error = "01x15 - Já existe uma categoria com esse nome",
@@ -163,8 +163,8 @@ namespace ExpenseControlSystem.Services {
             if (!string.IsNullOrWhiteSpace(dto.Description))
                 category.Description = dto.Description;
 
-            context.Categories.Update(category);
-            await context.SaveChangesAsync();
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseCategoryDto> {
                 Success = true,
@@ -176,10 +176,9 @@ namespace ExpenseControlSystem.Services {
             };
         }
         public async Task<ServiceResult<ResponseCategoryDto>> Delete(
-            ExpenseControlSystemDataContext context,
             Guid id) {
 
-            var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (category == null)
                 return new ServiceResult<ResponseCategoryDto> {
@@ -188,8 +187,8 @@ namespace ExpenseControlSystem.Services {
                     ClientErrorStatusCode = EClientErrorStatusCode.NotFound
                 };
 
-            context.Categories.Remove(category!);
-            await context.SaveChangesAsync();
+            _context.Categories.Remove(category!);
+            await _context.SaveChangesAsync();
 
             return new ServiceResult<ResponseCategoryDto> {
                 Success = true,

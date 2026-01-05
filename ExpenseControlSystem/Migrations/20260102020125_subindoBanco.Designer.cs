@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseControlSystem.Migrations
 {
     [DbContext(typeof(ExpenseControlSystemDataContext))]
-    [Migration("20251226033536_subindoBanco")]
+    [Migration("20260102020125_subindoBanco")]
     partial class subindoBanco
     {
         /// <inheritdoc />
@@ -41,20 +41,6 @@ namespace ExpenseControlSystem.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            Description = "Despesa com alimentação",
-                            Name = "Alimentação"
-                        },
-                        new
-                        {
-                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            Description = "Despesa com transporte",
-                            Name = "Transporte"
-                        });
                 });
 
             modelBuilder.Entity("ExpenseControlSystem.Models.Expense", b =>
@@ -96,41 +82,6 @@ namespace ExpenseControlSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Expenses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            Amount = 50.0m,
-                            CreatedAt = new DateTime(2025, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Compra de lanche pelo Ifood",
-                            DueDate = new DateTime(2025, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsPaid = true,
-                            SubCategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
-                        },
-                        new
-                        {
-                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            Amount = 28.50m,
-                            CreatedAt = new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Ida ao trabalho",
-                            DueDate = new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsPaid = true,
-                            SubCategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
-                            UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
-                        },
-                        new
-                        {
-                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
-                            Amount = 130.0m,
-                            CreatedAt = new DateTime(2025, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "viagem de uber para a praia",
-                            DueDate = new DateTime(2025, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsPaid = false,
-                            SubCategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
-                            UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
-                        });
                 });
 
             modelBuilder.Entity("ExpenseControlSystem.Models.SubCategory", b =>
@@ -158,36 +109,6 @@ namespace ExpenseControlSystem.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("SubCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            Description = "Despesas de alimentação por delivery",
-                            Name = "Ifood"
-                        },
-                        new
-                        {
-                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            Description = "Despesas com saidas ao restaurante",
-                            Name = "Restaurante"
-                        },
-                        new
-                        {
-                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
-                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            Description = "Despesas com transporte via aplicativo",
-                            Name = "Uber"
-                        },
-                        new
-                        {
-                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
-                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            Description = "Despesas com abastecimento de veículos",
-                            Name = "Combustível"
-                        });
                 });
 
             modelBuilder.Entity("ExpenseControlSystem.Models.User", b =>
@@ -215,15 +136,6 @@ namespace ExpenseControlSystem.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CreatedAt = new DateTime(2025, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "teste@gmail.com",
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("ExpenseControlSystem.Models.Expense", b =>

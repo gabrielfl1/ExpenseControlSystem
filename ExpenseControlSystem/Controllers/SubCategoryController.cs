@@ -14,11 +14,15 @@ namespace ExpenseControlSystem.Controllers {
     [Route("v1/subcategories")]
     public class SubCategoryController : ControllerBase {
 
+        private readonly SubCategoryServices _subCategoryServices;
+
+        public SubCategoryController(SubCategoryServices subCategoryServices) {
+            _subCategoryServices = subCategoryServices;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(
-            [FromQuery] GetSubCategoryDto dto,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetSubCategoryDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -26,7 +30,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var (subCategories, total) = await subCategoryServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
+                var (subCategories, total) = await _subCategoryServices.Get(dto);
                 
                 var result = new PagedResultDto<ResponseSubCategoryDto> {
                     Result = subCategories,
@@ -49,9 +53,7 @@ namespace ExpenseControlSystem.Controllers {
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(
             [FromRoute] Guid id,
-            [FromQuery] GetByIdSubCategoryDto dto,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetByIdSubCategoryDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -59,7 +61,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var subCategory = await subCategoryServices.GetById(context, dto, id);
+                var subCategory = await _subCategoryServices.GetById(dto, id);
 
                 if (!subCategory.Success) {
                     switch (subCategory.ClientErrorStatusCode) {
@@ -86,9 +88,7 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post(
-            [FromBody] PostSubCategoryDto dto,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PostSubCategoryDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
@@ -96,7 +96,7 @@ namespace ExpenseControlSystem.Controllers {
 
             try {
 
-                var subCategory = await subCategoryServices.Post(context, dto);
+                var subCategory = await _subCategoryServices.Post(dto);
 
                 if (!subCategory.Success) {
                     switch (subCategory.ClientErrorStatusCode) {
@@ -127,16 +127,14 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(
             [FromRoute] Guid id,
-            [FromBody] PutSubCategoryDto dto,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext contetext) {
+            [FromBody] PutSubCategoryDto dto) {
 
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
 
             try {
-                var subCategory = await subCategoryServices.Put(contetext, dto, id);
+                var subCategory = await _subCategoryServices.Put(dto, id);
 
                 if (!subCategory.Success) {
                     switch (subCategory.ClientErrorStatusCode) {
@@ -164,15 +162,13 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPatch("{id:guid}")]
         public async Task<IActionResult> Patch(
             [FromRoute] Guid id,
-            [FromBody] PatchSubCategoryDto dto,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext contetext) {
+            [FromBody] PatchSubCategoryDto dto) {
             if (!ModelState.IsValid) {
                 return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
 
             try {
-                var subCategory = await subCategoryServices.Patch(contetext, dto, id);
+                var subCategory = await _subCategoryServices.Patch(dto, id);
 
                 if (!subCategory.Success) {
                     switch (subCategory.ClientErrorStatusCode) {
@@ -199,13 +195,11 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
-            [FromRoute] Guid id,
-            [FromServices] SubCategoryServices subCategoryServices,
-            [FromServices] ExpenseControlSystemDataContext contetext) {
+            [FromRoute] Guid id) {
 
             try {
 
-                var subCategory = await subCategoryServices.Delete(contetext, id);
+                var subCategory = await _subCategoryServices.Delete(id);
 
                 if (!subCategory.Success) {
                     switch (subCategory.ClientErrorStatusCode) {

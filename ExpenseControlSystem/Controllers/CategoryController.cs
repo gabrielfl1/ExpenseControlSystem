@@ -15,25 +15,29 @@ namespace ExpenseControlSystem.Controllers {
     [Route("v1/categories")]
     public class CategoryController : ControllerBase {
 
+        private readonly CategoryServices _categoryServices;
+
+        public CategoryController(CategoryServices categoryServices) { 
+            _categoryServices = categoryServices;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(
-            [FromQuery] GetCategoryDto dto,
-            [FromServices] CategoryServices categoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromQuery] GetCategoryDto dto) {
 
             if (!ModelState.IsValid) {
-                return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
 
             try {
 
-                var (categories, total) = await categoryServices.Get(context, dto.Page!.Value, dto.PageSize!.Value);
+                var (categories, total) = await _categoryServices.Get(dto);
 
                 var result = new PagedResultDto<ResponseCategoryDto> {
                     Result = categories,
                     Total = total,
-                    Page = dto.Page.Value,
-                    PageSize = dto.PageSize.Value
+                    Page = dto.Page!.Value,
+                    PageSize = dto.PageSize!.Value
                 };
 
                 return Ok(new ResultViewModel<PagedResultDto<ResponseCategoryDto>>(result));
@@ -48,13 +52,11 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(
-            [FromRoute] Guid id,
-            [FromServices] CategoryServices categoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromRoute] Guid id) {
 
             try {
 
-                var category = await categoryServices.GetById(context, id);
+                var category = await _categoryServices.GetById(id);
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
@@ -80,16 +82,14 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post(
-            [FromServices] ExpenseControlSystemDataContext context,
-            [FromServices] CategoryServices categoryServices,
             [FromBody] PostCategoryDto dto) {
 
             if (!ModelState.IsValid) {
-                return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
 
             try {
-                var category = await categoryServices.Post(context, dto);
+                var category = await _categoryServices.Post(dto);
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
@@ -121,16 +121,14 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(
             [FromRoute] Guid id,
-            [FromBody] PutCategoryDto dto,
-            [FromServices] CategoryServices categoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PutCategoryDto dto) {
 
             if (!ModelState.IsValid) {
-                return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
 
             try {
-                var category = await categoryServices.Put(context, dto, id);
+                var category = await _categoryServices.Put(dto, id);
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
@@ -159,16 +157,14 @@ namespace ExpenseControlSystem.Controllers {
         [HttpPatch("{id:guid}")]
         public async Task<IActionResult> Patch(
             [FromRoute] Guid id,
-            [FromBody] PatchCategoryDto dto,
-            [FromServices] CategoryServices categoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromBody] PatchCategoryDto dto) {
 
             if (!ModelState.IsValid) {
-                return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
             }
             try {
 
-                var category = await categoryServices.Patch(context, dto, id);
+                var category = await _categoryServices.Patch(dto, id);
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
@@ -195,12 +191,10 @@ namespace ExpenseControlSystem.Controllers {
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(
-            [FromRoute] Guid id,
-            [FromServices] CategoryServices categoryServices,
-            [FromServices] ExpenseControlSystemDataContext context) {
+            [FromRoute] Guid id) {
 
             try {
-                var category = await categoryServices.Delete(context, id);
+                var category = await _categoryServices.Delete(id);
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
