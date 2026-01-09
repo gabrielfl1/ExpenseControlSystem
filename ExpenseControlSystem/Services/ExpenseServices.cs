@@ -77,7 +77,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x03 - Despesa não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -108,7 +108,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x06 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -120,7 +120,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x07 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -128,7 +128,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x08 - PaidAt não pode conter uma data futura",
-                    ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
+                    ClientErrorStatusCode = EErrorStatusCode.BadRequest
                 };
             }
 
@@ -183,7 +183,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x11 - Despesa não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound,
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound,
                 };
             }
 
@@ -193,7 +193,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x12 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -203,7 +203,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x13 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -211,7 +211,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x14 - O valor do custo deve ser maior que zero",
-                    ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
+                    ClientErrorStatusCode = EErrorStatusCode.BadRequest
                 };
             }
 
@@ -219,7 +219,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x15 - PaidAt não pode conter uma data futura",
-                    ClientErrorStatusCode = EClientErrorStatusCode.BadRequest
+                    ClientErrorStatusCode = EErrorStatusCode.BadRequest
                 };
             }
 
@@ -272,7 +272,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseExpenseDto> {
                     Success = false,
                     Error = "04x18 - Despesa não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
             _context.Remove(expense);

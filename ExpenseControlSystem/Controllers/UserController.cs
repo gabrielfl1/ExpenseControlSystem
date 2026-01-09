@@ -1,11 +1,12 @@
-﻿using ExpenseControlSystem.Data;
-using ExpenseControlSystem.DTOs;
+﻿using ExpenseControlSystem.DTOs;
+using ExpenseControlSystem.DTOs.SendEmailDto;
 using ExpenseControlSystem.DTOs.UserDtos;
 using ExpenseControlSystem.Enums;
 using ExpenseControlSystem.Extensions;
-using ExpenseControlSystem.Models;
+using ExpenseControlSystem.Interfaces;
 using ExpenseControlSystem.Services;
 using ExpenseControlSystem.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 
@@ -17,7 +18,7 @@ namespace ExpenseControlSystem.Controllers {
 
         private readonly UserServices _userServices;
 
-        public UserController(UserServices userServices) { 
+        public UserController(UserServices userServices) {
             _userServices = userServices;
         }
 
@@ -65,11 +66,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(user.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -100,17 +101,17 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(user.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
                     }
                 }
-                
+
                 return CreatedAtAction(
                     nameof(GetById),
                     new { id = user.Result.Id },
@@ -139,11 +140,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(user.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -175,11 +176,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(user.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -206,11 +207,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!user.Success) {
                     switch (user.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(user.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(user.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -227,5 +228,39 @@ namespace ExpenseControlSystem.Controllers {
             }
         }
 
+        [HttpPost("email")]
+        public async Task<IActionResult> SendMail(
+            [FromBody] SendEmailDto dto,
+            [FromServices] IEmailServices emailServices,
+            [FromServices] GenerateXlsx xlsxServices) {
+
+            if (!ModelState.IsValid) {
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
+            }
+
+            try {
+
+                var (result, document) = await xlsxServices.GenerateXlsxAsync(dto);
+
+                if (!result.Success) {
+                    return NotFound(new ResultViewModel<string>(result.Error));
+                }
+
+                var success = await emailServices.SendEmail(dto, document);
+
+                if (!success.Success) {
+                    return StatusCode(success.Result.StatusCode!.Value, new ResultViewModel<string>(success.Result.Message!));
+                }
+
+
+                return Ok(new ResultViewModel<ResponseSendEmailDto>(success.Result));
+            }
+            catch (DbException) {
+                return StatusCode(500, new ResultViewModel<string>("02x21 - Erro ao tentar se conectar ao banco de dados"));
+            }
+            catch (Exception) {
+                return StatusCode(500, new ResultViewModel<string>("02x22 - Erro interno de servidor"));
+            }
+        }
     }
 }

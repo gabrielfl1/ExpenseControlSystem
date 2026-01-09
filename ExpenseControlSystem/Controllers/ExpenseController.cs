@@ -63,11 +63,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(expense.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -100,11 +100,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(expense.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -142,11 +142,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(expense.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -173,11 +173,11 @@ namespace ExpenseControlSystem.Controllers {
                 var expense = await _expenseServices.Delete(id);
                 if (!expense.Success) {
                     switch (expense.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(expense.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(expense.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));

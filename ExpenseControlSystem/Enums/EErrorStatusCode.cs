@@ -1,5 +1,5 @@
 ﻿namespace ExpenseControlSystem.Enums {
-    public enum EClientErrorStatusCode {
+    public enum EErrorStatusCode {
         BadRequest,
         NotFound,
         Conflict,

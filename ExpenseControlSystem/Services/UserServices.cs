@@ -49,7 +49,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x03 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -70,6 +70,8 @@ namespace ExpenseControlSystem.Services {
                 PaidAt = x.PaidAt,
                 IsPaid = x.IsPaid,
                 CreatedAt = x.CreatedAt,
+                SubCategoryId = x.SubCategoryId
+
             }).ToListAsync();
 
             return new ServiceResult<ResponseUserDto> {
@@ -94,7 +96,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x06 - Não é possivel cadastrar um usuario com este E-mail",
-                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                    ClientErrorStatusCode = EErrorStatusCode.Conflict
                 };
 
             var user = new User {
@@ -126,7 +128,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x09 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
 
             dto.Email = dto.Email.Trim().ToLower();
@@ -135,7 +137,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x10 - Não é possivel atualizar um usuario com este E-mail",
-                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                    ClientErrorStatusCode = EErrorStatusCode.Conflict
                 };
 
             dto.Name = StringExtensions.StringNameEditor(dto.Name);
@@ -167,7 +169,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x13 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
 
             if (!string.IsNullOrWhiteSpace(dto.Name)) {
@@ -182,7 +184,7 @@ namespace ExpenseControlSystem.Services {
                     return new ServiceResult<ResponseUserDto> {
                         Success = false,
                         Error = "02x14 - Não é possivel atualizar um usuario com este E-mail",
-                        ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                        ClientErrorStatusCode = EErrorStatusCode.Conflict
                     };
 
                 user.Email = dto.Email;
@@ -211,7 +213,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseUserDto> {
                     Success = false,
                     Error = "02x17 - Usuário não encontrado",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
 
             _context.Remove(user);

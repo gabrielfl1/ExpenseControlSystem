@@ -50,7 +50,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x03 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -71,6 +71,7 @@ namespace ExpenseControlSystem.Services {
                 PaidAt = x.PaidAt,
                 IsPaid = x.IsPaid,
                 CreatedAt = x.CreatedAt,
+                UserId = x.UserId
             }).ToListAsync();
 
             return new ServiceResult<ResponseSubCategoryDto> {
@@ -94,7 +95,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x06 - Já existe uma subcategoria com esse nome nesta categoria",
-                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                    ClientErrorStatusCode = EErrorStatusCode.Conflict
                 };
             }
 
@@ -107,7 +108,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x07 - Não existe uma categoria com esse Id para ser adcionada há uma subcategoria",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -141,7 +142,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x10 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -154,7 +155,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x11 - Não existe uma categoria com esse Id para ser adcionada há uma subcategoria",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -167,7 +168,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x12 - Já existe uma subcategoria com esse nome nesta categoria",
-                    ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                    ClientErrorStatusCode = EErrorStatusCode.Conflict
                 };
             }
 
@@ -200,7 +201,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x15 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 
@@ -215,7 +216,7 @@ namespace ExpenseControlSystem.Services {
                     return new ServiceResult<ResponseSubCategoryDto> {
                         Success = false,
                         Error = "03x16 - Não existe uma categoria com esse Id para ser adcionada há uma subcategoria",
-                        ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                        ClientErrorStatusCode = EErrorStatusCode.NotFound
                     };
                 }
 
@@ -234,7 +235,7 @@ namespace ExpenseControlSystem.Services {
                     return new ServiceResult<ResponseSubCategoryDto> {
                         Success = false,
                         Error = "03x17 - Já existe uma subcategoria com esse nome nesta categoria",
-                        ClientErrorStatusCode = EClientErrorStatusCode.Conflict
+                        ClientErrorStatusCode = EErrorStatusCode.Conflict
                     };
                 }
                 subCategory.Name = dto.Name;
@@ -267,7 +268,7 @@ namespace ExpenseControlSystem.Services {
                 return new ServiceResult<ResponseSubCategoryDto> {
                     Success = false,
                     Error = "03x20 - Subcategoria não encontrada",
-                    ClientErrorStatusCode = EClientErrorStatusCode.NotFound
+                    ClientErrorStatusCode = EErrorStatusCode.NotFound
                 };
             }
 

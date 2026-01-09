@@ -11,7 +11,10 @@ namespace ExpenseControlSystem.DTOs.ExpenseDtos {
         public bool IsPaid { get; set; } = false;
         public DateTime CreatedAt { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Guid SubCategoryId { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Guid UserId { get; set; }
 
     }

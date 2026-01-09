@@ -60,11 +60,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(category.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -93,11 +93,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(category.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -132,11 +132,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(category.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -168,11 +168,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(category.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
@@ -198,11 +198,11 @@ namespace ExpenseControlSystem.Controllers {
 
                 if (!category.Success) {
                     switch (category.ClientErrorStatusCode) {
-                        case EClientErrorStatusCode.NotFound:
+                        case EErrorStatusCode.NotFound:
                             return NotFound(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.Conflict:
+                        case EErrorStatusCode.Conflict:
                             return Conflict(new ResultViewModel<string>(category.Error));
-                        case EClientErrorStatusCode.BadRequest:
+                        case EErrorStatusCode.BadRequest:
                             return BadRequest(new ResultViewModel<string>(category.Error));
                         default:
                             return StatusCode(500, new ResultViewModel<string>("Erro inesperado"));
