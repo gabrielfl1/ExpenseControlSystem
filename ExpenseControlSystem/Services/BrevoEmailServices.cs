@@ -39,7 +39,7 @@ namespace ExpenseControlSystem.Services {
                     }
                 },
                 subject = $"relatorio de gasto customizado {dto.ToName}",
-                htmlContent = 1, //stringBuilder.ToString(),
+                htmlContent = stringBuilder.ToString(),
                 attachment = new[] {
                     new { 
                         content = document,
