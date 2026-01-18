@@ -25,6 +25,7 @@ Projeto desenvolvido para demonstrar conhecimentos em **APIs REST** com **ASP.NE
 - Filtro por despesas pagas e não pagas (`IsPaid`)
 - Validação de dados com DataAnnotations
 - Padronização de respostas da API
+- Envio de Email com relatório de gastos de um usuario e/ou empresa com filtros opcionais de digida paga, não paga e atrasada.
 
 ---
 
